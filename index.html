@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Professional Portfolio</title>
+    <!-- 1. Bootstrap CSS Link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- 2. Google Font Link (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 3. Custom CSS for Styling, Color Palette, and Animations -->
+    <style>
+        /* Define the custom font and primary colors */
+        :root {
+            --primary-green: #047857; /* Darker, more professional green */
+            --accent-orange: #ea580c; /* Deeper orange for contrast */
+            --secondary-light: #f0f4f8; /* Light gray background */
+            --text-dark: #1f2937;
+            --text-light: #ffffff;
+            --font-family-inter: 'Inter', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family-inter);
+            color: var(--text-dark);
+            background-color: var(--secondary-light); /* Lighter contrast background */
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Heading Style: Bold, Underlined, and Green */
+        .portfolio-heading {
+            font-weight: 800; /* Extra Bold */
+            color: var(--primary-green);
+            text-decoration: underline;
+            text-decoration-color: var(--primary-green);
+            text-decoration-thickness: 4px; /* Thicker underline */
+            text-underline-offset: 10px;
+            margin-bottom: 3rem;
+            padding-bottom: 0.5rem;
+            font-size: 2.8rem; /* Larger font size */
+            opacity: 0; 
+            transform: translateY(30px); 
+            transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        /* Card Styling and Hover Animation */
+        .portfolio-card {
+            border: 1px solid rgba(249, 115, 22, 0.2); /* Subtle orange border */
+            border-radius: 1rem; 
+            background-color: var(--text-light);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Stronger shadow */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease; /* Bouncy transition */
+            opacity: 0;
+            transform: scale(0.95);
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-8px) scale(1.02); /* More lift and scale */
+            /* Deeper green shadow on hover */
+            box-shadow: 0 30px 40px -5px rgba(4, 120, 87, 0.4), 0 10px 10px -6px rgba(4, 120, 87, 0.2); 
+        }
+
+        /* Animation class to apply once elements are "visible" (simulated) */
+        .animate-in {
+            opacity: 1 !important;
+            transform: translateY(0) scale(1) !important;
+        }
+        
+        /* Specific animation delays for staggered effect */
+        .delay-1 { transition-delay: 0.1s; }
+        .delay-2 { transition-delay: 0.2s; }
+        .delay-3 { transition-delay: 0.3s; }
+        .delay-4 { transition-delay: 0.4s; }
+
+        /* Navigation bar styling */
+        .navbar-custom {
+            background-color: var(--primary-green) !important;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero Section - Advanced Styling with Gradient and Clip-Path */
+        .hero-section {
+            /* Deep Green Gradient */
+            background: linear-gradient(135deg, #10b981, #065f46); 
+            color: var(--text-light);
+            padding: 8rem 0 10rem; /* More padding */
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            /* Slanted bottom edge for a modern look */
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            animation: fadeInDown 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .hero-section h1, .hero-section p {
+            color: var(--text-light) !important;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button Pulse Animation (using accent-orange) */
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(234, 88, 12, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(234, 88, 12, 0);
+            }
+        }
+
+        /* Button Styling - Orange hover to contrast the green button */
+        .btn-custom-primary {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: var(--text-light);
+            font-weight: 700;
+            padding: 0.75rem 2.5rem;
+            transition: background-color 0.3s, transform 0.2s, border-color 0.3s;
+            /* Apply the pulse animation */
+            animation: pulse 2s infinite; 
+        }
+
+        .btn-custom-primary:hover {
+            background-color: var(--accent-orange); /* Orange on hover! */
+            border-color: var(--accent-orange);
+            transform: scale(1.05);
+            color: var(--text-light);
+            animation: none; /* Stop pulsing on hover */
+        }
+        
+        /* Utility class for orange text (re-used) */
+        .text-accent-orange {
+            color: var(--accent-orange) !important;
+        }
+        
+        /* Achievement Badges - make them look like professional chips */
+        .badge.text-bg-success {
+            background-color: #34d399 !important; /* Lighter green for chip contrast */
+            color: var(--text-dark) !important;
+            font-size: 0.85rem;
+            padding: 0.5em 1em;
+            font-weight: 700;
+            transition: background-color 0.3s;
+        }
+        
+        /* Profile Image styling */
+        .profile-img {
+            margin-top: -5rem; /* Pull image up into the hero section */
+            border: 8px solid var(--secondary-light);
+            transition: transform 0.3s;
+        }
+        .profile-img:hover {
+            transform: rotate(-3deg) scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top navbar-custom">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="#">
+                 PATEL HELLY PIYUSH
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About Me</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#achievements">Achievements</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="#project">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section / Introduction -->
+    <header class="hero-section">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-3">Hello, I'm Patel Helly.</h1>
+            <p class="lead fw-light mb-5">
+                <span class="border-bottom border-3 border-light pb-1">
+                    Passionate Developer | Designer | Problem Solver | Coder
+                </span>
+            </p>
+            <a href="#about" class="btn btn-custom-primary btn-lg px-5 shadow">Discover My Work</a>
+        </div>
+    </header>
+
+    <main class="container my-5 py-5">
+        
+        <!-- About Me Section -->
+        <section id="about" class="mb-5">
+            <h2 class="portfolio-heading text-center">About Me</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-5">
+                         <!-- Profile image styled to stand out and pull up -->
+                         <img src="img1.png" class="rounded-circle shadow-lg profile-img delay-1" alt="Profile Picture"/>
+                    </div>
+                    <div class="portfolio-card p-5 delay-2">
+                        <p class="fs-5 text-center mb-0" style="line-height: 1.8;">
+<p>Hey there! I’m Helly Patel — a passionate Computer Science Engineering student at LJ University, currently in my 5th semester.  
+I’m a coder with a creative edge, blending technology and design to craft meaningful digital experiences.  
+
+With a strong foundation in programming and a growing expertise in UI/UX design, I love turning ideas into interactive, visually appealing, and user-friendly solutions.  
+Beyond coding, I enjoy exploring editing and design tools to bring my projects to life with color, balance, and motion.
+</p>                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="mb-5 py-5">
+            <h2 class="portfolio-heading text-center">Education</h2>
+            <div class="row g-5 justify-content-center">
+                
+                <!-- Degree 1 Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold">B.E., in Computer Science</h4>
+                        <p class="mb-1 fw-bold">LJ University, 2023 - 2027</p>
+                        <p class="text-muted small"><p>Sem I - <b>7.29 SPI</b> </p>
+              <p>Sem II - <b>7.63 SPI</b></p>
+              <p>Sem III - <b>8.21 SPI</b> </p>
+              <p>Sem IV - <b>8.52 SPI</b> </p></p>
+
+                    </div>
+                </div>
+
+                <!-- Degree 2 Card -->
+                 <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold">H.S.C March-2023</h4>
+                        <p class="mb-1 fw-bold">Divine Buds English School</p>
+                       <p>12th - <b>76.29 Percentile</b></p>
+
+                    </div>
+                </div>
+
+                 <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold">H.S.C March-2023</h4>
+                        <p class="mb-1 fw-bold">Divine Buds English School</p>
+                       <p>12th - <b>76.29 Percentile</b></p>
+
+                    </div>
+                </div>
+
+                <!-- Certification Card (Added for variety) -->
+                
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements" class="py-5">
+            <h2 class="portfolio-heading text-center">Key Achievements</h2>
+            <div class="row g-4">
+                
+                <!-- Achievement 1 -->
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-1">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Python: Power, Simplicity and Efficiency Workshop 
+</h5>
+                       
+                    </div>
+                </div>
+                
+                <!-- Achievement 2 -->
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-2">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Introduction to Java from Lear quest</h5>
+                    </div>
+                </div>
+
+                <!-- Achievement 3 -->
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-3">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Inhertiance and Data Structures in Java form university of Pennsylvania</h5>
+                    </div>
+                </div>
+
+                <!-- Achievement 4 -->
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-4">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Introduction to Html, Css and JavaScript from IBM</h5>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-4">
+                        <h5 class="fw-bold mb-3 text-accent-orange">        Exploratory Data Analysis for Machine learning from IBM</h5>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-4">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Sql_basic from Hacker rank</h5>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-4">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Java_Basic from HackerRank</h5>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="portfolio-card p-4 delay-4">
+                        <h5 class="fw-bold mb-3 text-accent-orange">Sql_intermediate from HackerRank</h5>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+
+        <!--projhect sectionn-->
+        <section id="project" class="mb-5 py-5">
+            <h2 class="portfolio-heading text-center">Project</h2>
+            <div class="row g-5 justify-content-center">
+                
+                <!-- Degree 1 Card -->
+                <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold"><u>GYM Managment System<br>Python(Django)</u></h4>
+                        <p class="mb-1 fw-bold">Developed a full-stack web application to manage a gym with three user roles: Admin, Staff, and Members.
+Implemented features like login/signup, staff and member management, class scheduling, payments tracking, salary management, and feedback forms.</p>
+             </p>
+                      
+
+                    </div>
+                </div>
+
+                <!-- Degree 2 Card -->
+                 <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold"><u> Examination Portal<br> (Java, DBMS, Data Structures, Swing)</u></h4>
+                        <p class="mb-1 fw-bold"> <p>Developed a desktop-based portal for conducting exams with student and admin modules.
+Implemented features like MCQ tests, result generation, and user authentication.
+Applied data structures (linked lists, queues, trees) for efficient handling of questions, answers, and records.
+Designed the user interface with Java Swing for an interactive experience.
+</p></p>
+
+                    </div>
+                </div>
+
+                 <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold"><u>Plan You</u></h4>
+                        <p class="mb-1 fw-bold"> <p>Developed an intelligent career guidance platform enabling users to discover personalized career paths through AI-driven analysis.
+Frontend: Built with React.js (MERN stack) 
+Backend: Implemented using Django (Python) with AI/ML integration for career suggestion models
+Features: Chat-based AI counseling, career tests with instant analysis, dream/chat history, progress tracking, and downloadable career roadmaps.
+</p></p>
+
+                    </div>
+                </div>
+
+
+
+                 <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold"><u>Podcastify</u> </h4>
+                        <p class="mb-1 fw-bold">              <p>Podcastify is a responsive podcast streaming website built using HTML, CSS, and Bootstrap. It provides users with podcast recommendations based on their search queries, offering an intuitive interface, categorized results, and a mobile-friendly design to enhance the listening experience.
+</p>
+             </p>
+                      
+
+                    </div>
+                </div>
+
+
+
+
+                 <div class="col-md-6 col-lg-4">
+                    <div class="portfolio-card p-4 h-100 delay-2">
+                        <h4 class="mb-3 text-accent-orange fw-bold"><u>Library Managment System</u></h4>
+                        <p class="mb-1 fw-bold"> <p>Library Managment System 
+Developed a full-featured Library Management System using Java and Object-Oriented Programming principles with a MySQL backend conn ected via XAMPP. Also has knowledge of Java Swing and NetBeans
+
+</p></p>
+                      
+
+                    </div>
+                </div>
+
+                
+
+        <!-- Contact/Footer Section -->
+        <section id="contact" class="py-5 text-center">
+            <div class="p-5 my-5 rounded-4 shadow-lg" style="background-color: var(--text-light); border: 2px solid var(--primary-green);">
+                <h3 class="fw-bold mb-3" style="color:var(--text-dark);">Let's Start a Project Together!</h3>
+                <p class="lead mb-4 text-muted">I'm always open to new opportunities and collaborations. Feel free to reach out.</p>
+                <!-- Button has a pulse animation and an orange hover effect -->
+                <a href="mailto:johndoe@example.com" class="btn btn-lg btn-custom-primary shadow">Send Me an Email</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-4 text-white" style="background-color: var(--primary-green);">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 Patel Helly. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- Bootstrap JS Bundle (must be at the end of the body for best performance) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Custom JavaScript for Animation on Scroll Simulation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all elements designated for scroll animation
+            const elementsToAnimate = document.querySelectorAll('.portfolio-heading, .portfolio-card, .profile-img');
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Add the 'animate-in' class to trigger the smooth CSS transition
+                        entry.target.classList.add('animate-in');
+                        // Stop observing once the animation has been triggered
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                // Defines the viewport margin (acts as a buffer)
+                rootMargin: '0px',
+                // Trigger the animation when 10% of the element is visible
+                threshold: 0.1 
+            });
+
+            // Attach the observer to each element
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>
